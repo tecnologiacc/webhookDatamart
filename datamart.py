@@ -1,5 +1,4 @@
 from os import environ
-from dotenv import load_dotenv
 from flask import Flask, jsonify, request, Response
 
 import json
@@ -7,17 +6,14 @@ import os
 import pyodbc
 import requests
 
-# Load .env variables
-load_dotenv()
-
-server = environ.get('SERVER')
-database = environ.get('DATABASE')
-username = environ.get('USER')
-password = environ.get('PASSWORD')
-driver = environ.get('DRIVER')
+server = '3.129.161.218'
+database = 'BD_Datamart'
+username = 'Ascenda'
+password = 'AscendaP.'
+driver = '{ODBC Driver 17 for SQL Server}'
 
 # Conectarse con la DB
-conn = pyodbc.connect(f'DRIVER={driver};SERVER={server};DATABASE={database};UID={username};PWD={password};TrustServerCertificate=Yes')
+conn = pyodbc.connect(f'DRIVER={driver};SERVER={server};DATABASE={database};UID={username};PWD={password}')
 
 app = Flask(__name__)
 
