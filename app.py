@@ -13,7 +13,7 @@ server = '3.129.161.218'
 database = 'BD_Datamart'
 username = 'Ascenda'
 password = 'AscendaP.'
-driver = '{ODBC Driver 17 for SQL Server}' 
+driver = '{ODBC Driver 18 for SQL Server}' 
 
 conn = pyodbc.connect(f'DRIVER={driver};SERVER={server};DATABASE={database};UID={username};PWD={password}')
 
