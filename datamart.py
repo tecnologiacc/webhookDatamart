@@ -83,7 +83,7 @@ def download_document(type, id):
 
         # Generar el `path` para el documento con el formato: fecha_id_RTT.pdf
         formato_fecha = result[0][0].strftime('%Y%m%d%H%M%S%f')[:-4]
-        ruta = os.path.join(os.path.expanduser('~'), 'Downloads')
+        ruta = 'C:/websites/webhookpdfdemo'
         file = ''
         if type == 'RUC':
             file = f'{formato_fecha}_{id}_FRUC.pdf'
