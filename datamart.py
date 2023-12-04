@@ -24,6 +24,7 @@ app = Flask(__name__)
 @app.route('/download/<type>/<id>', methods = ['GET'])
 def download_document(type, id):
     json_response = {
+        'code': '',
         'message': '',
         'ruta': ''
     }
@@ -35,10 +36,21 @@ def download_document(type, id):
         }
         r = requests.get(URL, headers=header)
 
+        # Verificar si se obtuvo una respuesta
+        if r.status_code != 200:
+            json_response['code'] = '300'
+            json_response['message'] = 'Error al consultar la API'
+            return Response(
+                json.dumps(json_response),
+                status=400,
+                mimetype='application/json'
+            )
+
         # Confirmar `subscripcion activa` campo `EstadoCredencial`
         datamart_response = r.json()
         estado_credencial = datamart_response['EstadoCredencial']
         if estado_credencial != 'CredencialValida':
+            json_response['code'] = '301'
             json_response['message'] = 'Subscripcion inactiva'
             return Response(
                 json.dumps(json_response),
@@ -69,6 +81,7 @@ def download_document(type, id):
                 ORDER BY FechaRegistro DESC
             """
         else:
+            json_response['code'] = '302'
             json_response['message'] = 'Tipo de documento no permitido'
             return Response(
                 json.dumps(json_response),
@@ -85,6 +98,7 @@ def download_document(type, id):
 
         # Verificar si hay resultados
         if len(result) == 0:
+            json_response['code'] = '303'
             json_response['message'] = 'Documento no encontrado'
             return Response(
                 json.dumps(json_response),
@@ -114,6 +128,7 @@ def download_document(type, id):
             with open(os.path.join(ruta, file), 'wb') as f:
                 f.write(r.content)
         else:
+            json_response['code'] = '304'
             json_response['message'] = 'Documento no disponible para descarga'
             return Response(
                 json.dumps(json_response),
@@ -124,8 +139,10 @@ def download_document(type, id):
         # Verificar si el documento esta descargado
         # en la carpeta `downloads`
         if os.path.isfile(os.path.join(ruta, file)):
+            json_response['code'] = '200'
             json_response['message'] = 'Documento descargado'
         else:
+            json_response['code'] = '305'
             json_response['message'] = 'Documento no descargado'
         json_response['ruta'] = os.path.join(ruta, file)
 
