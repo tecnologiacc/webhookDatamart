@@ -17,7 +17,7 @@ password = environ.get('PASSWORD')
 driver = environ.get('DRIVER')
 
 # Conectarse con la DB
-conn = pyodbc.connect(f'DRIVER={driver};SERVER={server};DATABASE={database};UID={username};PWD={password};TrustServerCertificate=Yes')
+conn = pyodbc.connect(f'DRIVER={driver};SERVER={server};DATABASE={database};UID={username};PWD={password}')
 
 app = Flask(__name__)
 
