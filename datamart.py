@@ -16,6 +16,7 @@ database = environ.get('DATABASE')
 username = environ.get('USER')
 password = environ.get('PASSWORD')
 driver = environ.get('DRIVER')
+ruta = environ.get('RUTA')
 
 app = Flask(__name__)
 
@@ -63,7 +64,7 @@ def download_ruc_document(id):
         r = verify_datamart_subscription(id)
         if r.status_code != 200:
             json_response['code'] = '300'
-            json_response['message'] = 'Error al consultar la API'
+            json_response['message'] = 'Error al consultar la API de Datamart'
             return Response(
                 json.dumps(json_response),
                 status = 400,
@@ -123,7 +124,6 @@ def download_ruc_document(id):
 
         # Generar el `path` para el documento con el formato: fecha_id_RUC.pdf
         formato_fecha = result[0][0].strftime('%Y%m%d%H%M%S%f')[:-4]
-        ruta = os.path.join(os.path.expanduser('~'), 'Downloads')
         file = f'{formato_fecha}_{id}_FRUC.pdf'
 
         # Verificar estado de la descarga
@@ -153,7 +153,7 @@ def download_ruc_document(id):
                 mimetype = 'application/json'
             )
 
-        json_response['ruta'] = os.path.join(ruta, file)
+        json_response['ruta'] = 'Files/Persons/' + file
 
         return Response(
             json.dumps(json_response),
@@ -192,7 +192,7 @@ def download_rtt_document(id):
         r = verify_datamart_subscription(id)
         if r.status_code != 200:
             json_response['code'] = '300'
-            json_response['message'] = 'Error al consultar la API'
+            json_response['message'] = 'Error al consultar la API de Datamart'
             return Response(
                 json.dumps(json_response),
                 status = 400,
@@ -265,7 +265,6 @@ def download_rtt_document(id):
 
         # Generar el `path` para el documento con el formato: fecha_id_RUC.pdf
         formato_fecha = result[0][0].strftime('%Y%m%d%H%M%S%f')[:-4]
-        ruta = os.path.join(os.path.expanduser('~'), 'Downloads')
         file = f'{formato_fecha}_{id}_FRTT.pdf'
 
         # Verificar estado de la descarga
@@ -295,7 +294,7 @@ def download_rtt_document(id):
                 mimetype = 'application/json'
             )
 
-        json_response['ruta'] = os.path.join(ruta, file)
+        json_response['ruta'] = 'Files/Persons' + file
 
         return Response(
             json.dumps(json_response),
