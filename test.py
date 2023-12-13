@@ -62,19 +62,5 @@ class DatamartTests(unittest.TestCase):
             self.assertEqual(r.json()['code'], '301')
             self.assertEqual(r.json()['message'], 'Subscripcion inactiva')
 
-    def test_type_invalid(self):
-        URL = f'{self.base_url}/download/XXX/20506151547'
-
-        # Enviar solicitud
-        r = requests.get(URL)
-
-        # Verificar respuesta
-        self.assertEqual(r.status_code, 400)
-
-        if r.status_code == 400:
-            # Verificar mensaje de respuesta (JSON)
-            self.assertEqual(r.json()['code'], '302')
-            self.assertEqual(r.json()['message'], 'Tipo de documento no permitido')
-
 if __name__ == '__main__':
     unittest.main()

@@ -33,7 +33,7 @@ def verify_datamart_subscription(id):
         Respuesta de la API Datamart
 
     """
-    URL = 'https://api.datamart.pe/subscriptions/v1/check-subscription/20601610664/20601610664/RTTSync?check-cred-status=true'
+    URL = f'https://api.datamart.pe/subscriptions/v1/check-subscription/20601610664/{id}/RTTSync?check-cred-status=true'
     header = {
         'x-api-key': 'GQeqgT2mcc9W6ee7J1yPV3xApGBI6Cno2xwLtEri',
     }
